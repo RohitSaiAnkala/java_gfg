@@ -1,0 +1,7 @@
+private: Can be accessed only within that class
+
+default: Can be accessed in the same package
+
+protected: Can be accessed in same package and child class of other package
+
+public: Can be accessed anywhere

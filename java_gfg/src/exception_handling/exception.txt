@@ -1,0 +1,28 @@
+Exception stops the normal flow of execution
+
+let us assume  we have following statements
+.statement 1
+.statement 2 // exception occured
+.statement 3
+.statement 4
+
+In general if we have an exception at statement 2 then statement 3 and 4 will not execute but using
+java exception handling we can execute them i.e normal flow of program will continue (by handling exceptions)
+
+Examples: Divide by zero(ArithmeticException), InvalidArrayIndex(ArrayIndexOutOfBoundsException) etc
+
+Hierarchy of Exceptions
+                                    Object
+                                        |
+          ------------------------------|----------------------------
+          |                                                         |
+          |                                                         |
+          |                                                         |
+          Error                                                  Exception
+          .virtual machine error                                . RunTime Exception (Unchecked Exception)
+          . IO error                                                (Arithmetic,NullPointer, IndexOutOfBounds etc)
+                                                                .  Checked Exception(CompileTime Exception)
+                                                                    (FileNotFound , IO)
+
+
+Errors are not under programmer's control so we dont care about them.
