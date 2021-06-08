@@ -1,7 +1,5 @@
 package oops;
 
-import com.sun.xml.internal.rngom.parse.host.Base;
-
 // using name Inheritance instead of Bicycle
 public class Inheritance {
     int gear;
