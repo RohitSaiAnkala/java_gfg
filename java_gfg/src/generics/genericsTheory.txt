@@ -1,0 +1,26 @@
+Generics
+. They are used to generate compile time errors rather than runtime errors
+. Multiple types can be generically used for a class or a function
+ eg: same function can take Integer, Float or Student etc on run time
+
+
+Type Parameter Names:
+E ->Element (most used by Java collections)
+K ->Key
+V-> Value
+T-> Type
+N-> Number
+
+
+
+Syntax of generics for class,functions and interfaces
+class Student<T1,T2,...,Tn>{
+}
+
+public <T> void fun(T a){
+
+}
+
+interface MyInterface<T1,T2,....,Tn>{
+
+}
