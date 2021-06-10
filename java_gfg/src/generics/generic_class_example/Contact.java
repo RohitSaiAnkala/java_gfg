@@ -6,6 +6,13 @@ public class Contact {
     String lName;
     String phoneNumber;
 
+    public Contact(String salutation, String fName, String lName, String phoneNumber) {
+        this.salutation = salutation;
+        this.fName = fName;
+        this.lName = lName;
+        this.phoneNumber = phoneNumber;
+    }
+
     public String getSalutation() {
         return salutation;
     }
@@ -36,5 +43,15 @@ public class Contact {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "salutation='" + salutation + '\'' +
+                ", fName='" + fName + '\'' +
+                ", lName='" + lName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
     }
 }

@@ -1,6 +1,6 @@
 package generics.generic_class_example;
 
-public class Person <E>{
+public class Person<E> {
     public E e;
 
     public E getPerson() {

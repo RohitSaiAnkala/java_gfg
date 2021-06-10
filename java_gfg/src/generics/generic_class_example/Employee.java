@@ -5,6 +5,15 @@ public class Employee {
     String lName;
     String employeeId;
 
+    Employee() {
+    }
+
+    public Employee(String fName, String lName, String employeeId) {
+        this.fName = fName;
+        this.lName = lName;
+        this.employeeId = employeeId;
+    }
+
     public String getfName() {
         return fName;
     }
@@ -27,5 +36,14 @@ public class Employee {
 
     public void setEmployeeId(String employeeId) {
         this.employeeId = employeeId;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "fName='" + fName + '\'' +
+                ", lName='" + lName + '\'' +
+                ", employeeId='" + employeeId + '\'' +
+                '}';
     }
 }
