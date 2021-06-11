@@ -1,11 +1,11 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 
 public class TestCommit {
     public static void main(String[] args) {
-//        System.out.println("Hello World");
-//        System.out.println("New Commit ");
-        Pair p1 = new Pair(10, 40);
+       Pair p1 = new Pair(10, 40);
         Pair p2 = new Pair(20, 30);
         Pair p3 = new Pair(10, 20);
         Pair[] arr = new Pair[]{p1, p2, p3};
@@ -21,9 +21,7 @@ public class TestCommit {
         System.out.println(Arrays.toString(arr));
         fun(arr);
         fun2(false, 24.52);
-
     }
-
     static <E> void fun(E[] array) {
         for (E ele : array) {
             System.out.println(ele);
