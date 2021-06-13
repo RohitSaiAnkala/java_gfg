@@ -1,0 +1,22 @@
+
+.Streams are pipeline of functions which take source and apply certain operations
+ (intermediate and terminal) and obtain the result
+.stream() is present in collections interface which is extended by majority of the collections.
+.There can be zero or more intermediate operations and 1 terminal operation
+.When terminal operation begins execution then the intermediate operations are triggered.
+
+Advantage of Streams
+. No storage (it is just an abstraction over the source)
+. Lazy execution
+  Execution stops when terminal operation is completed. eg: findFirst() terminal function it only needs to find 1 element satisfying the filter criteria(if any)
+. Streams can be parallelised. (Multi-Threading takes place and multiple cores of the processor are used efficiently to increase performance).
+. Can be created from multiple sources like collections,arrays,files.
+. Code is readable,short and efficient.
+
+Intermediate Operations:
+.Take stream as input and return stream as output
+.filter(),distinct(),sorted()
+Terminal Operations:
+.Take stream as input but does not return stream
+.forEach(),findFirst(),collect(),reduce(),count(),min(),max()
+
