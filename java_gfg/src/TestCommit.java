@@ -18,7 +18,7 @@ public class TestCommit {
         System.out.println(Arrays.toString(arr));
         fun(arr);
         fun2(false, 24.52);
-    }
+}
 
     static <E> void fun(E[] array) {
         for (E ele : array) {
