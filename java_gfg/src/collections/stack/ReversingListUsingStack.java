@@ -1,4 +1,4 @@
-package collections.list;
+package collections.stack;
 
 import java.util.*;
 
@@ -15,7 +15,7 @@ public class ReversingListUsingStack {
 
     public static void reverse(List<Integer> list) {
 //        Stack<Integer> s = new Stack<>();
-        Deque<Integer> s=new ArrayDeque<>();
+        Deque<Integer> s = new ArrayDeque<>();
         for (Integer ele : list)
             s.push(ele);
         for (int i = 0; i < list.size(); i++) {
