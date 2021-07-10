@@ -2,6 +2,7 @@ package misc;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Objects;
 
 public class Point {
     private int x;
@@ -27,14 +28,18 @@ public class Point {
                 ", y=" + y +
                 '}';
     }
-}
 
-class PointComparator implements Comparator<Point> {
     @Override
-    public int compare(Point o1, Point o2) {
-        return o1.getX() - o2.getX();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Point point = (Point) o;
+        return x == point.x &&
+                y == point.y;
     }
 }
+
+
 
 class TestPoint {
     public static void main(String[] args) {
