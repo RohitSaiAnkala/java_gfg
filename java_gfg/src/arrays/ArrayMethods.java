@@ -7,12 +7,12 @@ import java.util.*;
 
 public class ArrayMethods {
     public static void main(String[] args) {
-//        fillMethod();
-//        binarySearch();
-//        equals();
-//        mismatch();
-//        compare();
-//        asList();
+        fillMethod();
+        binarySearch();
+        equals();
+        mismatch();
+        compare();
+        asList();
         toStringExample();
     }
 
