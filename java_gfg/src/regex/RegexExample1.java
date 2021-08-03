@@ -4,13 +4,13 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RegexExample {
+public class RegexExample1 {
     public static void main(String[] args) {
         System.out.println();
-//        patternAndMatcher();
-//        quantifiers();
-//        metaCharacters();
-//        findingRegex();
+        patternAndMatcher();
+        quantifiers();
+        metaCharacters();
+        findingRegex();
         emailValidation();
     }
 

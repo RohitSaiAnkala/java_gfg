@@ -1,0 +1,18 @@
+Regular Expression:
+A group of strings according to a pattern
+eg: mobile no should contain 10 digits (indian).
+
+Applications:
+. Validation Frameworks
+. Pattern Searching (Ctrl+F)
+. Lexical Analysis in compiler design
+. TCP/IP,UDP protocols
+
+Pattern:
+. compiled version of regular expression
+. equivalent java object of regular expression
+
+Matcher:
+. to match the given regex/pattern in the target string.
+. can be created using matcher method of Pattern class.
+. important methods: find(),start(),end(),group()
