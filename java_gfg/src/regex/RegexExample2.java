@@ -1,5 +1,6 @@
 package regex;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,15 +9,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegexExample2 {
-    public static void main(String[] args) {
-//         characterClasses();
-//         preDefinedCharacterClasses();
-//         quantifiers();
-//        patternClassSplitExample();
-//        stringClassSplitExample();
-//        stringTokenizerExample();
-//        phoneNumberApplication();
-          emailValidationApplication();
+    public static void main(String[] args) throws Exception{
+        characterClasses();
+        preDefinedCharacterClasses();
+        quantifiers();
+        patternClassSplitExample();
+        stringClassSplitExample();
+        stringTokenizerExample();
+        phoneNumberApplication();
+        emailValidationApplication();
+        application1();
+        application2();
     }
 
     public static void characterClasses() {
@@ -87,18 +90,53 @@ public class RegexExample2 {
             System.out.println(st.nextToken());
         }
     }
-    public static void phoneNumberApplication(){
-        System.out.println(Pattern.matches("[7-9][0-9]{9}","9848022338")); // 10 digit numbers with first digit 7/8/9
-        System.out.println(Pattern.matches("0?[789][0-9]{9}","09848022338")); // 10 or 11 digit numbers if 11 digit 1st digit should be zero
-        System.out.println(Pattern.matches("0?[789][0-9]{9}","9848022338"));
-        System.out.println(Pattern.matches("(0|91)?[7-9][0-9]{9}","919848022338")); /* 10 or 11 or 12 digit numbers if
+
+    public static void phoneNumberApplication() {
+        System.out.println(Pattern.matches("[7-9][0-9]{9}", "9848022338")); // 10 digit numbers with first digit 7/8/9
+        System.out.println(Pattern.matches("0?[789][0-9]{9}", "09848022338")); // 10 or 11 digit numbers if 11 digit 1st digit should be zero
+        System.out.println(Pattern.matches("0?[789][0-9]{9}", "9848022338"));
+        System.out.println(Pattern.matches("(0|91)?[7-9][0-9]{9}", "919848022338")); /* 10 or 11 or 12 digit numbers if
         11 digit->first number should be zero ,if 12 digit then first 2 digits should be 91 */
     }
-    public static void emailValidationApplication(){
+
+    public static void emailValidationApplication() {
         String emailRegex = "[a-zA-Z0-9][a-zA-z0-9._]*@[a-zA-Z0-9]+([.][a-zA-z]+)+";
-        System.out.println(Pattern.matches(emailRegex,"durga_ocjp.123@gmail.com"));
-        System.out.println(Pattern.matches(emailRegex,"durga_ocjp.123@gmail.co.in"));
+        System.out.println(Pattern.matches(emailRegex, "durga_ocjp.123@gmail.com"));
+        System.out.println(Pattern.matches(emailRegex, "durga_ocjp.123@gmail.co.in"));
         String gmailRegex = "[a-zA-Z0-9][a-zA-Z0-9_.]*@gmail[.]com";
-        System.out.println(Pattern.matches(gmailRegex,"nagasai.velpuri@gmail.com"));
+        System.out.println(Pattern.matches(gmailRegex, "nagasai.velpuri@gmail.com"));
+    }
+    public static void application1() throws IOException {
+/*      to collect all mobile no's and emailIds from one file and output it to another
+        Pattern p = Pattern.compile("(0|91)?[7-9][0-9]{9}");-->for mobile nos
+        Pattern p = Pattern.compile("[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+"); --> for emailIds  */
+
+        Pattern p = Pattern.compile("((0|91)?[7-9][0-9]{9}|[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+)"); // phoneno or emailId
+        PrintWriter pw = new PrintWriter("E:\\Desktop\\java_gfg\\java_gfg\\src\\regex\\output.txt");
+        BufferedReader br = new BufferedReader(new FileReader("E:\\Desktop\\java_gfg\\java_gfg\\src\\regex\\input.txt"));
+        String line = br.readLine();
+        while(line!=null){
+            Matcher m = p.matcher(line);
+            while(m.find()){
+                pw.println(m.group());
+            }
+            line = br.readLine();
+        }
+        pw.flush();
+    }
+    public static void application2(){
+        // to find all .pdf files in a particular folder
+        Pattern p = Pattern.compile("[a-zA-Z0-9][a-zA-Z0-9$_.]*[.]pdf");
+        File file = new File("E:\\Desktop\\cdk");
+        String[] files = file.list();
+        int count=0;
+        for(String f: files){
+            Matcher m = p.matcher(f);
+            while(m.find()&&m.group().equals(f)){
+                System.out.println(f);
+                count++;
+            }
+        }
+        System.out.println("The no of pdf files in E:\\Desktop\\cdk is :"+count);
     }
 }
