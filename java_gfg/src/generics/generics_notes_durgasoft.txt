@@ -255,3 +255,57 @@ class HashMap<K,V>{
 
 } // K->Key Type , V->Value Type
 HashMap<Integer,String> hm = new HashMap<Integer,String>();
+
+Generic Methods and Wild-Card character (?)
+
+m1(ArrayList<String> l){
+l.add("ravi");
+l.add(null);
+l.add(10); // compile-error
+}
+We can call this method by passing arraylist of only string type but within the method we can add only string type of objects to the list
+by mistake if we are trying to add any other type then we will get compile-time error.
+
+m1(ArrayList<?> l){
+    l.add(10.5); // invalid
+    l.add("A"); // invalid
+    l.add(10); // invalid
+    l.add(null); // valid
+}
+We can call this method by passing arraylist of any type but within the method we can't add anything to the list except null because we
+dont know the type exactly. Null is allowed because it is valid value for any type.
+
+This type of methods are best-suitable for read-only operations.
+
+m1(ArrayList<? extends X> l){
+l.add(null);
+}
+X can be either class or interface.
+If X is a class then we can call this method by passing arraylist of either X type or its child classes
+If X is an interface then we call this method by passing arraylist of either X type or its implementation classes.
+but within the method we cant add anything to the list except null because we dont know the type of X exactly.
+This type of methods are also best suitable for read only operations.
+
+m1(ArrayList<? super X> l){
+l.add(null);
+l.add(X);
+}
+X can be either class or interface.
+If X is a class then we can call this method by passing arraylist of type X or its super classes.
+If X is an interface then we can call this method by passing arraylist of type X or super class of implementation class of X.
+ eg: Runnable(X)      Object
+           \         /
+            \       /
+              Thread
+Here Thread is the implementation class of Runnable interface and super class of Thread is Object.
+But within the method we can add X type of objects and null to the list.
+
+Some valid and invalid use of ?
+. ArrayList<String> l = new ArrayList<String>(); // valid
+. ArrayList<?> l = new ArrayList<String>(); // valid
+. ArrayList<?> l = new ArrayList<Integer>(); // valid
+. ArrayList<? extends Number> l = new ArrayList<Integer>(); // valid
+. ArrayList<? extends Number> l = new ArrayList<String>(); // invalid --> String is not child class of Number
+. ArrayList<? super String> l = new ArrayList<Object>(); // valid
+. ArrayList<?> l = new ArrayList<?>(); // invalid -->compile error unexpected type found:? required: class or interface without bounds
+. ArrayList<?> l = new ArrayList<? extends Number>(); // invalid -->compile error unexpected type found:? extends Number required: class or interface without bounds
