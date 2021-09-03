@@ -309,3 +309,93 @@ Some valid and invalid use of ?
 . ArrayList<? super String> l = new ArrayList<Object>(); // valid
 . ArrayList<?> l = new ArrayList<?>(); // invalid -->compile error unexpected type found:? required: class or interface without bounds
 . ArrayList<?> l = new ArrayList<? extends Number>(); // invalid -->compile error unexpected type found:? extends Number required: class or interface without bounds
+
+We can declare type parameter either at class level or at method level
+
+Declaring type parameter at class level
+
+class Test<T>{
+
+}
+We can use T within this class based on our requirement.
+
+Declaring type parameter at method level
+class Test{
+
+public <T> void m1(T obj){
+
+}
+}
+We have to declare type parameter just before return type.
+We can use T anywhere within this method based on our requirement.
+
+We can define bounded types even at method level also
+public <T> void m1(T obj) -->valid
+public <T extends Number> void m1(T obj) --> valid
+public <T extends Runnable> void m1(T obj) --> valid
+public <T extends Number & Runnable> void m1(T obj) -->valid
+public <T extends Comparable & Runnable> void m1(T obj) -->valid
+public <T extends Number & Comparable & Runnable> void m1(T obj) -->valid
+public <T extends Runnable & Number > void m1(T obj) -->invalid (first we should extend class and then implement interface)
+public <T extends Number & Thread> void m1(T obj) -->invalid (we cannot extend more than one class)
+
+Communication with non-generic code
+If we send generic object to non-generic area then it starts behaving like non-generic object. Similarly if we send non-generic object to generic area then
+it starts behaving like generic object. i.e the location in which object present based on that behaviour will be defined.
+
+class Test{
+public static void main(String args[]){
+ArrayList<String> l = new ArrayList<String>();
+l.add("durga");
+l.add("ravi");
+// l.add(10); // invalid --> we cannot add integer type to arraylist of string
+m1(l);
+System.out.println(l); // [durga,ravi,10,10.5,true]
+// l.add(10.5)// invalid --> srinivas cannot eat non-veg in his home.
+}
+public static void m1(ArrayList l){
+  l.add(10); // valid as Srinivas can eat non-veg in durgas home
+  l.add(10.5); // valid as l becomes non-generic in m1 and we can add any type to arraylist l
+  l.add(true); // valid same reason as above
+}
+Conclusions:
+.The main purpose of generics is to provide type-safety and to resolve type-casting problems
+
+.Type-Safety and Type-Casting both are applicable at compile-time.
+.Hence generics concepts also applicable only at compile-time but not at run-time.
+
+.At the time of compilation as last step generics syntax will be removed and hence for the JVM
+generic syntax won't be available.
+
+. Hence following declarations are equal
+   ArrayList l = new ArrayList<String>();
+   ArrayList l = new ArrayList<Integer>();
+   ArrayList l = new ArrayList<Double>();
+   ArrayList l = new ArrayList();
+
+Eg:
+. ArrayList l = new ArrayList<String>();
+        l.add(10);
+        l.add(10.5);
+        l.add(true);
+        System.out.println(l); // [10,10.5,true]
+
+
+. The following declarations are equal
+
+  ArrayList<String> l = new ArrayList<String>();
+  ArrayList<String> l = new ArrayList();
+  For these arraylist objects we can add only string type of objects.
+
+. class Test{
+	public void m1(ArrayList<String> l){
+	}
+	public void m1(ArrayList<Integer> l){
+	}
+   }
+   // Compile Time error: both methods have same erasure.
+At compile Time
+. compile code-normally by considering generic syntax.
+. remove generic syntax
+. compile code once again resultant code
+
