@@ -1,0 +1,663 @@
+Inner Classes
+
+Sometimes we can declare a class inside another class such type of classes are called inner-classes.
+
+Inner classes concept introduced in Java 1.1 version to fix GUI bugs as part of event-handling but
+because of powerful features and benefits of inner-classes slowly programmers started using in regular
+coding also. 
+
+Without existing one type of object if there is no chance of existing another type of object then we should 
+go for inner-classes.
+
+
+Example 1: University consists of several departments. Without existing university there is no chance of 
+existing department hence we have to declare department class inside university class. 
+
+class University{
+	class Department{
+	 }
+}
+University --> OuterClass , Department --> InnerClass
+
+Example 2: Car consists of engine. Without existing car object there is no chance of existing engine. hence we need to declare engine class 
+inside car class.
+class Car{
+	class Engine{
+	}
+}
+
+Example 3:  Map is a group of key-value pairs and each key-value pair is called an entry. Without existing 
+map object there is no chance of existing entry object. Hence interface entry is defined inside map interface.
+
+interface Map{
+	interface Entry{
+	}
+}
+
+Note: Without existing outer-class object there is no chance of existing inner class object.
+
+The relation between outer class and inner class is not a "IS-A" relationship and it is "HAS-A" relationship.
+(Composition/Aggregation)
+
+Based on position of declaration and behaviour all inner-classes are divided into 4 types:
+.Normal or Regular Inner Classes
+.Method Local Inner Classes
+.Anonymous Inner Classes
+.Static Nested Classes
+
+Normal or Regular Inner Classes
+If we are declaring any named class directly inside a class without static modifier such type of inner class
+is called normal or regular inner class.
+
+Example 1: 
+class Outer{
+	class Inner{
+	}
+}
+
+javac Outer.java --> when we compile the code
+then 2 .class files will be generated they are
+Outer.class and Outer$Inner.class (here $ indicates inner class)
+
+java Outer --> run the code
+then we get runtime exception : NoSuchMethodError: main()
+
+java Outer$Inner --> run the code
+then we get runtime exception : NoSuchMethodError: main()
+
+Example 2: 
+class Outer{
+	class Inner{
+	}
+   public static void main(String[] args){
+	System.out.println("Outer class Main Method");
+    }
+}
+
+java Outer --> run the code
+then we get output --> Outer class Main Method
+
+java Outer$Inner --> run the code
+then we get runtime exception : NoSuchMethodError: main()
+
+
+Example 2: 
+class Outer{
+	class Inner{
+   		public static void main(String[] args){
+			System.out.println("Outer class Main Method");
+    		}
+	  }
+}
+
+javac Outer.java --> gives compile time error saying:  Inner classes cannot have static declarations.
+ 
+Inside inner class we can't declare any static members hence we can't declare main method and we can't 
+run inner class from command prompt.
+
+
+
+Case 1: Accessing inner class code from static area of outer class 
+
+class Outer{
+	class Inner{
+   		public void m1(){
+			System.out.println("Inner Class Method");
+    		}
+	  }
+	public static void main(String [] args){
+		Outer o = new Outer();
+		Outer.Inner i = o.new Inner();
+		i.m1();	
+		// Outer.Inner i = new Outer().new Inner(); and i.m1().
+		// new Outer().new Inner().m1();
+	}
+  }
+
+Case 2 : Accessing inner class code from instance area of outer class
+
+class Outer {
+	class Inner{
+		public void m1(){
+			System.out.println("Inside Inner Class Method");
+		}
+	}
+	public void m2(){
+		Inner i = new Inner();
+		i.m1();
+	}
+	public static void main(String[] args){
+		Outer o = new Outer();
+		o.m2();
+	}
+}
+
+Case 3: Accessing inner class code from outside of outer class
+
+class Outer{
+	class Inner{
+   		public void m1(){
+			System.out.println("Inner Class Method");
+    		}
+	  }
+	}
+class Test{
+	public static void main(String [] args){
+		Outer o = new Outer();
+		Outer.Inner i = o.new Inner();
+		i.m1();	
+		// Outer.Inner i = new Outer().new Inner(); and i.m1().
+		// new Outer().new Inner().m1();
+	}
+  }
+// same as case 1: Accessing inner class code from static area of Outer class
+
+Summary: 
+	        Accessing Inner Class code 
+		/                     \
+       	       /	               \
+              /                         \
+From static area of Outer class    	From instance area of Outer class
+     (or)
+From outside of Outer class
+
+
+From normal or regular inner class we can access both static and non-static members of outer class
+directly. 
+Eg:  class Outer{
+	 int x = 10;
+	static int y = 20;
+	 class Inner{
+		public void m1(){
+		  System.out.println(x);
+		  System.out.println(y);
+		}
+	 }
+	public static void main (String[] args){
+		new Outer().new Inner().m1();
+	}
+   }	
+	
+Within the inner class this always refers current inner-class object if we want to refer current outer
+class object we have to use outerclassname.this 
+
+	class Outer{
+		int x = 10;
+		class Inner{
+		    int x = 100;
+                  public void m1(){
+		  int x = 1000;
+		  System.out.println(x); // 1000
+		  System.out.println(this.x) // 100
+		  System.out.println(Outer.this.x) // 10
+		}
+              }
+	public static void main (String[] args){
+		new Outer().new Inner().m1();
+	}
+      }
+The only applicable modifiers for outer classes are public, default, final, abstract
+but for inner classes applicable modifiers are public,default,final,abstract,private,protected,static
+
+Nesting of Inner Classes:
+Inside inner class we can declare another inner class i.e, nesting of inner classes is possible.
+
+    class A{
+	class B {
+		class C {
+               public void m1(){
+		System.out.println("Innermost class method");
+		}
+	   }
+        }
+   class Test{
+	A a = new A();
+      A.B b = a.new B();
+    A.B.C c = b.new C();
+	c.m1();
+   }
+
+Method Local Inner Classes:
+ Sometimes we can declare a class inside a method such type of inner classes are called method local inner classes
+ The main purpose of method local inner class is to define method specific repeatedly required functionality. 
+ Method local inner-classes are best suitable to meet nested method requirments. 
+ We can access method local inner-classes only within the method where we declare, outside of the method we cant access 
+ Because of its less scope method local inner-classes are most rarely used type of inner classes.
+ 
+class Test{
+   public void m1(){
+		class Inner{
+		public void sum(int x,int y){
+			System.out.println("Sum is:"+(x+y));
+	 }
+	}
+	Inner i = new Inner();
+	i.sum(10,20); // Sum is: 30
+	;;;;;;
+	i.sum(100,200); // Sum is: 300
+	;;;;;
+	i.sum(1000,2000);// Sum is: 3000
+  }
+  public static void main(String[] args){
+    Test t = new Test();
+	t.m1();
+  }
+}
+
+We can declare method local inner-class inside both instance and static methods. 
+If we declare inner class inside instance method then from that method local inner class we can access both static and non-static members of outer-class directly.
+If we declare inner class inside static method then we can access only static members of outer-class directly from that  method local inner class.
+
+Eg:
+class Test{
+	int x =10;
+	static int y =20;
+   public void m1(){
+		class Inner{
+		public void m2(int x,int y){
+			System.out.println(x); // line 1 
+			System.out.println(y);
+	 }
+	}
+	Inner i = new Inner();
+	i.m2();
+  }
+  public static void main(String[] args){
+    Test t = new Test();
+	t.m1();
+  }
+}
+If we declare m1 method as static then at line 1 we will get compile time error saying non-static variable x cannot be referenced from a static context.
+
+From method local inner-class we can't access local variables of the method in which declare inner-class. If the local variable declared as final
+then we can access. 
+
+Eg:
+class Test{
+   public void m1(){
+		int x =10;
+		class Inner{
+		public void m2(){
+			System.out.println(x); 
+	 }
+	}
+	Inner i = new Inner();
+	i.m2();
+  }
+  public static void main(String[] args){
+    Test t = new Test();
+	t.m1();
+  }
+}
+This program gives compile time error: local variable x is accessed from within inner class; needs to be declared final.
+If we declare x as final then we wont get any compile time error. 
+
+The only applicable modifiers for method local inner-classes are final and abstract. If we are trying to apply any other modifier then we will get 
+compile time error.
+
+Anonymous Inner Class:
+Sometimes we can declare inner-class without name such type of inner-classes are called anonymous inner-classes.
+The main purpose of anonymous inner-class is just for instant use.(one time usage).
+Based on declaration and behaviour there are 3 types of anonymous inner-classes
+1.Anonymous inner class that extends a class
+2.Anonymous inner class that implements an interface
+3.Anonymous inner class that defined inside arguments.
+
+Anonymous inner class that extends a class:
+public class PopCorn {
+	public void taste() {
+		System.out.println("salty");
+
+	}
+}
+
+class Test {
+	public static void main(String[] args) {
+		PopCorn p = new PopCorn() {
+			public void taste() {
+				System.out.println("Spicy");
+			}
+		};
+		p.taste(); // Spicy
+		PopCorn p1 = new PopCorn();
+		p1.taste(); // salty
+		PopCorn p2 = new PopCorn() {
+			public void taste() {
+				System.out.println("Sweet");
+			}
+		};
+		p2.taste(); // Sweet
+		System.out.println(p.getClass().getName()); // Test$1
+		System.out.println(p1.getClass().getName()); // PopCorn
+		System.out.println(p2.getClass().getName()); // Test$2
+	}
+}
+The generated .class files are PopCorn.class, Test.class, Test$1.class, Test$2.class
+
+Analysis: 
+1. PopCorn p = new PopCorn(); 
+  Just we are creating popcorn object.
+2. PopCorn p = new PopCorn(){
+	};
+	We are declaring a class that extends PopCorn without name (Anonymous inner-class)
+	For that child class we are creating an object with Parent reference.
+3. PopCorn p = new PopCorn(){
+		public void taste(){
+			System.out.println("Spicy");
+	  }
+	};
+	We are declaring a class that extends PopCorn without name(Anonymous inner class)
+	In the child class we are overriding taste method 
+	For that child class we are creating an object with parent reference.
+	
+Defining a thread by extending Thread class
+Normal Class Approach:
+class MyThread extends Thread {
+	public void run(){
+		for(int i=0;i<10;i++){
+			System.out.println("Child Thread");
+		}
+	}
+}
+class TestMyThread{
+	public static void main(String[] args) {
+		MyThread m = new MyThread();
+		m.start();
+		for(int i=0;i<10;i++){
+			System.out.println("Main Thread");
+		}
+	}
+}
+Anonymous Inner Class Approach:
+class ThreadDemo {
+public static void main(String[] args) {
+	MyThread m = new MyThread(){
+		public void run(){
+			for(int i=0;i<10;i++){
+				System.out.println("Child Thread");
+			}
+		}
+	};
+	m.start();
+	for(int i=0;i<10;i++){
+		System.out.println("Main Thread");
+	}
+}
+}
+Anonymous inner-class that implements an interface:
+Defining a thread by implementing Runnable interface
+Normal Class Approach:
+class MyRunnable implements Runnable {
+	public void run(){
+		for(int i=0;i<10;i++){
+			System.out.println("Child Thread");
+		}
+	}
+}
+class TestMyThread{
+	public static void main(String[] args) {
+		MyRunnable r = new MyRunnable();
+		Thread t = new Thread(r);
+		t.start();
+		for(int i=0;i<10;i++){
+			System.out.println("Main Thread");
+		}
+	}
+}
+Anonymous Inner Class Approach:
+class ThreadDemo {
+public static void main(String[] args) {
+	Runnable r = new Runnable(){
+		public void run(){
+			for(int i=0;i<10;i++){
+				System.out.println("Child Thread");
+			}
+		}
+	};
+	Thread t = new Thread(r);
+	t.start();
+	for(int i=0;i<10;i++){
+		System.out.println("Main Thread");
+	}
+}
+}
+Anonymous inner-class that define inside arguments:
+
+class ThreadDemo {
+public static void main(String[] args) {
+	new Thread(new Runnable(){
+		public void run(){
+			for(int i=0;i<10;i++){
+				System.out.println("Child Thread");
+			}
+		}
+	}).start();
+	for(int i=0;i<10;i++){
+		System.out.println("Main Thread");
+	}
+}
+}
+
+Normal Java Class vs Anonymous Inner Class
+.A normal java class can extend only 1 class at a time ofcourse anonymous inner-class can also extend only one class at a time
+.A normal java class can implement any number of interfaces simultaneously but anonymous inner-class can implement only 1 interface at a time.
+.A normal java class can extend a class and can implement any number of interface simultaneously but anonymous inner-class can extend a class 
+ or can implement an interface but not both simultaneously
+.In normal java class we can write any number of constructors but in anonymous inner-classes we cant write any constructor explicitly because the name 
+ of the class and name of the constructor must be same but anonymous inner-classes dont have any name.
+. If the requirement is standard and required several times then we should go for normal top-level class. If the requirement is temporary and required
+ only once (instant use) then we should go for anonymous inner class.
+ 
+
+
+Static Nested Classes:
+Sometimes we can declare inner-class with static modifier, such type of inner-classes are called static nested classes
+In the case of normal or regular inner class without existingouter class object there is no chance of existing inner-class object i.e inner class is strongly
+associated with outer class object.
+But in the case of static nested classes without existing outer class object there may be a chance of existing nested class object. hence static nested
+class object is not strongly associated with outer class object.
+
+class Outer{
+ static class Nested{
+	public void m1(){
+	 System.out.println("Static Nested class Method");
+        }
+  }
+	public static void main(String[] args){
+	Nested n = new Nested();
+	n.m1();
+	}	
+}
+If you want to create nested class object from outside of outer class then we can create as follows
+Outer.Nested  n = new Outer.Nested();
+
+In normal or regular inner-classes we cant declare any static members.
+But in static nested classes we can declare static members including main method. Hence we can invoke static nested class directly from command prompt.
+
+public class Test {
+	static class Nested {
+		public static void main(String[] args) {
+		System.out.println("Static nested class main method");
+		}
+	}
+	public static void main(String[] args) {
+		System.out.println("Outer class main method");
+	}
+}
+javac Test.java
+java Test
+Output: Outer class main method
+
+java Test$Nested
+Output: Static nested class main method
+
+From normal or regular inner-classes we can access both static and non-static members of outer class directly. But from static nested classes we can access
+static members of outer class directly and we can't access non-static members. 
+
+public class Test {
+	int x=10;
+	static int y=20;
+	static class Nested {
+		public void m1(){
+		System.out.println(x); // CE: non-static variable x cannot be referenced from a static context.
+		System.out.println(y);
+		}
+	}
+	public static void main(String[] args) {
+		Nested n = new Nested();
+		n.m1();
+	}
+}
+
+Difference between normal/regular inner class and static nested class
+
+			Normal/Regular Inner Class																				Static Nested Class
+Without existing outer class object there is no chance of existing of inner class object		Without existing outer class object there may be a chance of existing static
+i.e inner class object is strongly associated with outer class object. 							nested class object i.e static nested class object is not strongly associated with outer class object.
+
+In normal/regular inner classes we can't declare static members.								In static nested classes we can declare static members.
+
+In normal/regular inner class we can't declare main method and hence we can't					In static nested classes we can declare main method and hence we can invoke nested class 
+invoke inner class directly from command prompt.												directly from command prompt.
+
+From normal or regular inner class we can access both static and non-static members				From static nested classes we can access only static members of outer class
+of outer class directly.																
+
+
+Various combinations of nested classes and interfaces
+
+Case 1 : class inside a class
+Without existing one type of object if there is no chance of existing another type of object then we can declare class inside a class 
+Eg: University consists of several departments. Without existing univeristy there is no existing department hence we have to declare department class inside
+university class.
+		class University{
+				class Department{
+				}
+		}
+Case 2 : Interface inside a class
+Inside a class if we require multiple implementations of an interface and all these implementations are related to a particular class then we can define 
+interface inside a class
+
+class VehicleTypes{
+
+		interface Vehicle{
+			public int getNoOfWheels();
+		}
+	class Bus implements Vehicle{
+		public int getNoOfWheels(){
+			return 4;
+		}
+	}
+		class Auto implements Vehicle{
+		public int getNoOfWheels(){
+			return 3;
+		}
+	}
+}
+
+Case 3: Interface inside a interface
+We can declare interface inside interface.
+
+Eg: A map is a group of key-value pairs and each key-value pair is called an entry. Without existing map object there is no chance of existing entry object.
+Hence interface entry is defined inside map interface.
+
+interface Map{
+	interface Entry{
+	}
+}
+
+Every interface present inside interface is always public and static whether we are declaring or not.
+Hence we can implement inner interface directly without implementing outer interface. 
+Similarly whenever we are implementing outer interface we are not required to implement inner interface i.e we can implement outer and interfaces independently.
+
+interface Outer{
+	public void m1();
+	
+	interface Inner{
+	   public void m2();
+	}
+	
+}
+
+class Test1 implements Outer{
+	public void m1(){
+	System.out.println("Outer class implementation");
+	}
+}
+
+class Test2 implements Outer.Inner{
+	public void m2(){
+	System.out.println("Inner class implementation");
+	}
+}
+
+class Test{
+	public static void main(String[] args){
+	 Test1 t1 = new Test1();
+     t1.m1();
+     Test2 t2 = new Test2();
+	 t2.m2();
+	}
+}
+
+Case 4 : Class inside an interface
+If functionality of a class is closely associated with interface then it is highly recommended to declare class inside interface.
+
+	 interface EmailService{
+		public void sendEmail(EmailDetails e);
+	 
+	 class EmailDetails{
+		String to_list;
+		String cc_list;
+		String subject;
+		String body;
+	 }
+  }
+In the above example EmailDetails is required only for EmailService and we are not using anywhere else. Hence EmailDetails class is recommended to declare 
+inside EmailService interface.
+
+We can also define a class inside interface to provide default implementation for that interface.
+
+interface Vehicle{
+	public int getNoOfWheels();
+	class DefaultVehicle implements Vehicle{
+		public int getNoOfWheels(){
+			return 2;
+		}
+	}
+}
+class Bus implements Vehicle{
+	public int getNoOfWheels(){
+		return 6;
+	}
+}
+class Test {
+	public static void main(String[] args){
+		Vehicle.DefaultVehicle d = new Vehicle.DefaultVehicle();
+		System.out.println(d.getNoOfWheels());
+		Bus b = new Bus();
+		System.out.println(b.getNoOfWheels());
+		}
+}
+In the above example DefaultVehicle is the default implementation of Vehicle interface whereas Bus is customised implementation of Vehicle interface.
+
+The class which is declared inside interface is always public static whether we are declaring or not hence we can create class object directly without having 
+outer interface type object.
+
+Conclusions:
+Among classes and interfaces we can declare anything inside anything.
+
+class A {				class A{			  interface A{ 				interface A{
+	class B{				interface B{		interface B{				class B{
+	}						}					}							}
+}						}					  }							}
+
+
+	
+
+
+
+
+
+
+ 
