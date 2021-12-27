@@ -41,8 +41,11 @@ public class CompletableFutureDemo {
 	}
 
 	public static void chainOfCallbacks() {
-		CompletableFuture<Void> future = CompletableFuture.supplyAsync(() -> "Rohit ").thenApply(val -> val + "Sai")
-				.thenApply(val -> "Hello " + val).thenAccept(System.out::println);
+		CompletableFuture<Void> future = CompletableFuture
+				.supplyAsync(() -> "Rohit ")
+				.thenApply(val -> val + "Sai")
+				.thenApply(val -> "Hello " + val)
+				.thenAccept(System.out::println);
 	}
 
 }
