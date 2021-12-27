@@ -4,11 +4,11 @@ import java.util.concurrent.CompletableFuture;
 
 public class CompletableFutureDemo {
 	public static void main(String[] args) {
-		// runAsync();
-		// supplyAsync();
-		// thenRun();
-		// thenAccept();
-		// thenApply();
+		runAsync();
+		supplyAsync();
+		thenRun();
+		thenAccept();
+		thenApply();
 		chainOfCallbacks();
 	}
 
@@ -41,11 +41,8 @@ public class CompletableFutureDemo {
 	}
 
 	public static void chainOfCallbacks() {
-		CompletableFuture<Void> future = CompletableFuture
-				.supplyAsync(() -> "Rohit ")
-				.thenApply(val -> val + "Sai")
-				.thenApply(val -> "Hello " + val)
-				.thenAccept(System.out::println);
+		CompletableFuture<Void> future = CompletableFuture.supplyAsync(() -> "Rohit ").thenApply(val -> val + "Sai")
+				.thenApply(val -> "Hello " + val).thenAccept(System.out::println);
 	}
 
 }
