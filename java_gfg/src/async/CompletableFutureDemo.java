@@ -7,18 +7,19 @@ import java.util.stream.Stream;
 
 public class CompletableFutureDemo {
 	public static void main(String[] args) {
-		// runAsync();
-		// supplyAsync();
-		// thenRun();
-		// thenAccept();
-		// thenApply();
-		// chainOfCallbacks();
-		// thenCompose();
-		// thenCombine();
-		// thenAcceptBoth();
-		// allOf();
-		// anyOf();
+		 runAsync();
+		 supplyAsync();
+		 thenRun();
+		 thenAccept();
+		 thenApply();
+		 chainOfCallbacks();
+		 thenCompose();
+		 thenCombine();
+		 thenAcceptBoth();
+		 allOf();
+		 anyOf();
 		exceptionally();
+		 
 	}
 
 	public static void runAsync() {
